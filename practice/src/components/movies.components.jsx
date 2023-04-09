@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Pagination from './pagination.components';
 import { getMovies } from '../services/movies.service';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import { map } from 'lodash';
 
 class MovieLists extends Component {
     state = { 
@@ -11,6 +13,23 @@ class MovieLists extends Component {
 
     handleChangePage = (page) => {
         this.setState({ ...this.state, activePage: page });
+    }
+
+    handleRating = (id) => {
+        const newMovies = this.state.movies.map((movie) => {
+            return { ...movie }
+        });
+
+        const newState = { ...this.state, movies: newMovies };
+        const updatedMovies = newState.movies.map((movie) => {
+            if(movie.id === id){
+                movie.myRating = !(movie.myRating)
+            }
+            return movie;
+        });
+        const updatedState = { ...newState, movies:updatedMovies }
+
+        this.setState({ ...updatedState });
     }
 
     paginateMovies = () => {
@@ -44,8 +63,8 @@ class MovieLists extends Component {
                                         <th scope="row">{ movie.id }</th>
                                         <td>{ movie.rank }</td>
                                         <td>{ movie.title }</td>
-                                        <td>
-                                            { movie.myRating ? 'Rated' : 'unrated' }
+                                        <td onClick = { () => this.handleRating(movie.id) }>
+                                            { movie.myRating ? <i class="bi bi-star-fill"></i> : <i class="bi bi-star"></i> }
                                         </td>
                                     </tr>
                                 );
