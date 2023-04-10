@@ -112,13 +112,6 @@ class MovieLists extends Component {
                         />
                     </div>
                 </div>
-                
-                {/* <Pagination 
-                    total = { filtered.length }
-                    pageCount = { this.state.pageCount }
-                    activePage = { this.state.activePage }
-                    onChangePage = { this.handleChangePage }
-                /> */}
             </>
         );
     }
