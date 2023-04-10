@@ -68,9 +68,9 @@ class MovieLists extends Component {
             <>
                 <div className='row'>
                     <Filter 
-                        genres = { this.state.genres }
-                        onClickGenre = { this.handleClickGenre }
-                        selectedGenre = { this.state.selectedGenre }
+                        filteredItems = { this.state.genres.map((genre, idx) => ({ _id: idx, name: genre.name })) }
+                        onClick = { this.handleClickGenre }
+                        selectedItem = { this.state.selectedGenre }
                     />
                     <div className='col-lg-8'>
                         <h4>Showing { filtered.length } Movies</h4> <br />

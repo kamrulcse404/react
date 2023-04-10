@@ -3,17 +3,17 @@ import React, { Component } from 'react';
 class Filter extends Component {
 
     render() { 
-        const { genres, onClickGenre, selectedGenre } = this.props;
+        const { filteredItems, onClick, selectedItem } = this.props;
         return (
             <div className='col-lg-2'>
                 <ul className="list-group">
                 {
-                    genres.map((genre) => (<li
+                    filteredItems.map((item) => (<li
                         style={{ cursor: 'pointer' }}
-                        onClick={ () => onClickGenre(genre.name) }
-                        key={ genre.id }
-                        className={ selectedGenre === genre.name ?  "list-group-item active" : "list-group-item" }>
-                            { genre.name }
+                        onClick={ () => onClick(item.name) }
+                        key={ item._id }
+                        className={ selectedItem === item.name ?  "list-group-item active" : "list-group-item" }>
+                            { item.name }
                         </li>))
                 }
                 </ul>
