@@ -6,6 +6,11 @@ class Pagination extends Component {
         const { total, pageCount, activePage, onChangePage  } = this.props;
         const totalPage = Math.ceil(total/pageCount);
         const pages = _.range(1, totalPage+1, 1);
+
+        if (total <= pageCount) {
+            return null;
+        }
+
         return (
             <nav>
                 <ul class="pagination">

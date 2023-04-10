@@ -36,8 +36,8 @@ class MovieLists extends Component {
         this.setState({ ...updatedState });
     }
 
-    paginateMovies = () => {
-        const { movies, activePage, pageCount } = this.state;
+    paginateMovies = (movies) => {
+        const { activePage, pageCount } = this.state;
         const start = (activePage-1) * pageCount;
         const paginatedMovies = movies.slice(start, start + pageCount);
 
@@ -45,11 +45,24 @@ class MovieLists extends Component {
     }
 
     handleClickGenre = (genreName) => {
-        this.setState({ ...this.state, selectedGenre: genreName })
+        this.setState({ ...this.state, selectedGenre: genreName, activePage: 1 })
+    }
+
+    filterMovies = () => {
+        const { movies, selectedGenre } = this.state;
+
+        const filteredMovies = movies.filter((movie) => {
+            if(selectedGenre === 'All Genres') return true;
+            if (movie.genres.includes(selectedGenre)) return true;
+            return false;
+        });
+
+        return filteredMovies;
     }
 
     render() { 
-        const movies = this.paginateMovies();
+        const filtered = this.filterMovies();
+        const movies = this.paginateMovies(filtered);
 
         return (
             <>
@@ -60,7 +73,7 @@ class MovieLists extends Component {
                         selectedGenre = { this.state.selectedGenre }
                     />
                     <div className='col-lg-8'>
-                        <h4>Showing { movies.length } Movies</h4> <br />
+                        <h4>Showing { filtered.length } Movies</h4> <br />
                         <table class="table">
                             <thead>
                                 <tr>
@@ -91,15 +104,21 @@ class MovieLists extends Component {
                                 }
                             </tbody>
                         </table>
+                        <Pagination 
+                            total = { filtered.length }
+                            pageCount = { this.state.pageCount }
+                            activePage = { this.state.activePage }
+                            onChangePage = { this.handleChangePage }
+                        />
                     </div>
                 </div>
                 
-                <Pagination 
-                    total = { this.state.movies.length }
+                {/* <Pagination 
+                    total = { filtered.length }
                     pageCount = { this.state.pageCount }
                     activePage = { this.state.activePage }
                     onChangePage = { this.handleChangePage }
-                />
+                /> */}
             </>
         );
     }
