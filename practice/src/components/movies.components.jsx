@@ -8,9 +8,11 @@ import Filter from './filtering.components';
 class MovieLists extends Component {
     state = { 
         movies: getMovies(),
-        genres: getGenres(),
+        // genres: getGenres(),
+        genres: [ { name: 'All Genres' }, ...getGenres() ],
         activePage: 1,
         pageCount: 10,
+        selectedGenre: 'All Genres',
     }
 
     handleChangePage = (page) => {
@@ -42,6 +44,10 @@ class MovieLists extends Component {
         return paginatedMovies; 
     }
 
+    handleClickGenre = (genreName) => {
+        this.setState({ ...this.state, selectedGenre: genreName })
+    }
+
     render() { 
         const movies = this.paginateMovies();
 
@@ -50,6 +56,8 @@ class MovieLists extends Component {
                 <div className='row'>
                     <Filter 
                         genres = { this.state.genres }
+                        onClickGenre = { this.handleClickGenre }
+                        selectedGenre = { this.state.selectedGenre }
                     />
                     <div className='col-lg-8'>
                         <h4>Showing { movies.length } Movies</h4> <br />

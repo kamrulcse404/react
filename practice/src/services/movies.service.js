@@ -6659,7 +6659,9 @@ const getGenres = () => {
         }
     });
 
-    return Array.from(genres);
+    const convertedGenres = Array.from(genres).map((genre, idx) => ({ id: idx, name: genre }))
+    // return Array.from(genres);
+    return convertedGenres;
 }
 
 export {
