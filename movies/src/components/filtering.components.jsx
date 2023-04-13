@@ -1,7 +1,6 @@
 import React from 'react';
 
-const Filter = (props) => {
-    const { filteredItems, onClick, selectedItem } = props;
+const Filter = ({ filteredItems, onClick, selectedItem }) => {
     return (
         <div className='col-lg-2'>
             <ul className="list-group">

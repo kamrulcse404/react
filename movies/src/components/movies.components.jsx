@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Pagination from './pagination.components';
 import { getGenres, getMovies } from '../services/movies.service';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { map } from 'lodash';
 import Filter from './filtering.components';
+import MoviesTable from './movies-table.component';
+import _ from "lodash";
 
 class MovieLists extends Component {
     state = { 
@@ -13,6 +14,7 @@ class MovieLists extends Component {
         activePage: 1,
         pageCount: 10,
         selectedGenre: 'All Genres',
+        sortColumn: { path: 'title', order: 'asc' }
     }
 
     handleChangePage = (page) => {
@@ -60,9 +62,20 @@ class MovieLists extends Component {
         return filteredMovies;
     }
 
+    sortMovies = (movies) => {        
+        const { sortColumn } = this.state;
+        const sortedMovies = _.orderBy(movies, [sortColumn.path], [sortColumn.order]);
+        return sortedMovies;
+    }
+
+    handleSort = sortColumn => {
+        this.setState({ ...this.state, sortColumn});
+    }
+
     render() { 
         const filtered = this.filterMovies();
-        const movies = this.paginateMovies(filtered);
+        const sorted = this.sortMovies(filtered);
+        const movies = this.paginateMovies(sorted);
 
         return (
             <>
@@ -74,36 +87,12 @@ class MovieLists extends Component {
                     />
                     <div className='col-lg-8'>
                         <h4>Showing { filtered.length } Movies</h4> <br />
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Poster</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Year</th>
-                                    <th scope="col">IMDB Rating</th>
-                                    <th scope="col">MyRating</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    movies.map(movie => {
-                                        return (
-                                            <tr>
-                                                <td>
-                                                    <img style={{ width: '40px', height: 'auto' }} src={ movie.posterurl } />
-                                                </td>
-                                                <td>{ movie.title }</td>
-                                                <td>{ movie.year }</td>
-                                                <td><i class="bi bi-star-fill"></i> { movie.imdbRating }</td>
-                                                <td onClick = { () => this.handleRating(movie.title) }>
-                                                    { movie.myRating ? <i class="bi bi-star-fill"></i> : <i class="bi bi-star"></i> }
-                                                </td>
-                                            </tr>
-                                        );
-                                    })
-                                }
-                            </tbody>
-                        </table>
+                        <MoviesTable 
+                            movies={ movies }
+                            onClickRating = { this.handleRating }
+                            onSort = { this.handleSort }
+                            sortColumn = { this.state.sortColumn }
+                        />
                         <Pagination 
                             total = { filtered.length }
                             pageCount = { this.state.pageCount }
