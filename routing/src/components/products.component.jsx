@@ -1,8 +1,16 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 const Product = () => {
-    return ( 
-        <div>Products</div>
+
+    const { year, month } = useParams();
+
+    return (
+        <>
+            <div>Products</div>
+            <div>Year : {year}</div>
+            <div>Month : {month}</div>
+        </>
     );
 }
 

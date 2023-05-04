@@ -4,17 +4,19 @@ import Product from "./components/products.component";
 import Post from "./components/post.component";
 import Admin from "./components/admin.component";
 import { Route, Routes } from "react-router-dom";
+import NotFound from "./components/notFound.component";
 
 function App() {
   return (
     <>
       <Navigation />
       <Routes>
-        <Route path="/" Component={Home} />
-        <Route path="/home" Component={Home} />
-        <Route path="/products" Component={Product} />
-        <Route path="/posts" Component={Post} />
-        <Route path="/admin" Component={Admin} />
+        <Route path="/" element={ <Home/> } />
+        <Route path="/home" element={ <Home/> } />
+        <Route path="/products/:year?/:month?" element={ <Product selected = { true }/> } />
+        <Route path="/posts" element={ <Post/> } />
+        <Route path="/admin" element={ <Admin/> } />
+        <Route path="*" element={ <NotFound/> } />
       </Routes>
     </>
   );

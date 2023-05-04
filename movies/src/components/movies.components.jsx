@@ -80,6 +80,7 @@ class MovieLists extends Component {
         return (
             <>
                 <div className='row'>
+                <h3 className='text-center'>Top Movies List</h3>
                     <Filter 
                         filteredItems = { this.state.genres.map((genre, idx) => ({ _id: idx, name: genre.name })) }
                         onClick = { this.handleClickGenre }
