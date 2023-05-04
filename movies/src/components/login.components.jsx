@@ -29,36 +29,21 @@ class Login extends Component {
       <div className="container w-50 mx-auto">
         <form onSubmit={this.handleSubmit}>
           <div className="mb-3">
-            <label className="form-label" htmlFor="userName">
-              User Name
-            </label>
-            <input
-              autoFocus
-              type="text"
-              className="form-control"
-              id="userName"
-              name="username"
-              value={this.state.user.username}
-              onChange={(e) => this.handleChange(e)}
-            />
-            {/* <Input
+            <Input
               label="User Name"
               name="username"
               id="userName"
               type="text"
               value={this.state.user.username}
               onChange={(e) => this.handleChange(e)}
-            /> */}
+            />
           </div>
           <div className="mb-3">
-            <label className="form-label" htmlFor="password">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
+            <Input
+              label="Password"
               name="password"
+              id="password"
+              type="password"
               value={this.state.user.password}
               onChange={(e) => this.handleChange(e)}
             />
