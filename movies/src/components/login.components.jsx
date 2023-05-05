@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import Input from "../common/input.component";
 import { useNavigate } from "react-router-dom";
+import Form from "../common/form.component";
 
-class Login extends Component {
+class Login extends Form {
   state = {
-    user: { username: "", password: "" },
+    data: { username: "", password: "" },
     errors: { username: "", password: "" },
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  doSubmit = (e) => {
     const userName = e.target[0].value;
     const password = e.target[1].value;
     const history = useNavigate();
@@ -25,32 +25,32 @@ class Login extends Component {
     }
   };
 
-  validateInput = (name, value) => {
-    if (name == "username") {
-      if (value.trim() === "") return "Username must not be empty";
-    }
+  // validateInput = (name, value) => {
+  //   if (name == "username") {
+  //     if (value.trim() === "") return "Username must not be empty";
+  //   }
 
-    if (name == "password") {
-      if (value.trim() === "") return "Password must not be empty";
-    }
+  //   if (name == "password") {
+  //     if (value.trim() === "") return "Password must not be empty";
+  //   }
 
-    return "";
-  };
+  //   return "";
+  // };
 
-  handleChange = (e) => {
-    const name = e.currentTarget.name;
-    const value = e.target.value;
+  // handleChange = (e) => {
+  //   const name = e.currentTarget.name;
+  //   const value = e.target.value;
 
-    const error = this.validateInput(name, value);
-    const errors = { ...this.state.errors };
+  //   const error = this.validateInput(name, value);
+  //   const errors = { ...this.state.errors };
 
-    errors[name] = error;
+  //   errors[name] = error;
 
-    const user = { ...this.state.user };
-    user[name] = value;
+  //   const user = { ...this.state.user };
+  //   user[name] = value;
 
-    this.setState({ user, errors });
-  };
+  //   this.setState({ user, errors });
+  // };
 
   render() {
     return (
@@ -62,7 +62,7 @@ class Login extends Component {
               name="username"
               id="userName"
               type="text"
-              value={this.state.user.username}
+              value={this.state.data.username}
               onChange={(e) => this.handleChange(e)}
               errors={this.state.errors}
             />
@@ -73,7 +73,7 @@ class Login extends Component {
               name="password"
               id="password"
               type="password"
-              value={this.state.user.password}
+              value={this.state.data.password}
               onChange={(e) => this.handleChange(e)}
               errors={this.state.errors}
             />

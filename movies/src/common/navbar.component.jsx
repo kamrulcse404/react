@@ -39,6 +39,13 @@ const Navbar = () => {
               placeholder="Search"
               aria-label="Search"
             />
+            <div class="card d-none" style={{position: "absolute", top: 50, width: "18rem;"}}>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">An item</li>
+                <li class="list-group-item">A second item</li>
+                <li class="list-group-item">A third item</li>
+              </ul>
+            </div>
             <button class="btn btn-outline-success" type="submit">
               Search
             </button>
