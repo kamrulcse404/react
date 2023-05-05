@@ -1,28 +1,56 @@
 import React, { Component } from "react";
 import Input from "../common/input.component";
+import { useNavigate } from "react-router-dom";
 
 class Login extends Component {
   state = {
     user: { username: "", password: "" },
+    errors: { username: "", password: "" },
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
     const userName = e.target[0].value;
     const password = e.target[1].value;
+    const history = useNavigate();
 
-    console.log({ userName, password });
+    if (userName === "admin" && password === "12345") {
+      history("/movies");
+    } else {
+      const errors = { ...this.state.errors };
+      errors.username = "Username may be incorrect";
+      errors.password = "Password may be incorrect";
+
+      this.setState({ ...this.state, errors });
+    }
   };
 
-  handleChange = e => {
+  validateInput = (name, value) => {
+    if (name == "username") {
+      if (value.trim() === "") return "Username must not be empty";
+    }
+
+    if (name == "password") {
+      if (value.trim() === "") return "Password must not be empty";
+    }
+
+    return "";
+  };
+
+  handleChange = (e) => {
     const name = e.currentTarget.name;
     const value = e.target.value;
-    
-    const updatedUser = { ...this.state.user }
-    updatedUser[name] = value;
 
-    this.setState({ user: updatedUser });
-  }
+    const error = this.validateInput(name, value);
+    const errors = { ...this.state.errors };
+
+    errors[name] = error;
+
+    const user = { ...this.state.user };
+    user[name] = value;
+
+    this.setState({ user, errors });
+  };
 
   render() {
     return (
@@ -36,6 +64,7 @@ class Login extends Component {
               type="text"
               value={this.state.user.username}
               onChange={(e) => this.handleChange(e)}
+              errors={this.state.errors}
             />
           </div>
           <div className="mb-3">
@@ -46,6 +75,7 @@ class Login extends Component {
               type="password"
               value={this.state.user.password}
               onChange={(e) => this.handleChange(e)}
+              errors={this.state.errors}
             />
           </div>
           <div className="mb-3 form-check">

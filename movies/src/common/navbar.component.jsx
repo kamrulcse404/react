@@ -26,6 +26,11 @@ const Navbar = () => {
                 Movies
               </Link>
             </li>
+            <li class="nav-item">
+              <Link class="nav-link active" aria-current="page" to="/add-movie">
+                Add Movie
+              </Link>
+            </li>
           </ul>
           <form class="d-flex">
             <input
