@@ -8,7 +8,7 @@ class Navbar extends Form{
   state = {
     data: {search_query: ''},
     errors: {},
-    movies: getMovies(),
+    movies: getMovies().map((movie, idx) => ({ ...movie, id: `movie-${idx+1}` })),
   };
 
   doSubmit = (e) => {
@@ -28,7 +28,7 @@ class Navbar extends Form{
 
   render(){
 
-    const searched_movies = this.searchMovies();
+    const searched_movies = this.searchMovies().filter((movie,idx) => idx < 10);
 
     return (
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -80,7 +80,9 @@ class Navbar extends Form{
               >
                 <ul class="list-group list-group-flush">
                   {searched_movies.map((movie, idx) => (
-                    <li key={idx} className="list-group-item">{movie.title}</li>
+                    <li key={idx} className="list-group-item">
+                      <Link to={'/movie/' + movie.id}>{movie.title}</Link>
+                    </li>
                   ))}
                 </ul>
               </div>
