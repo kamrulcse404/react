@@ -3,20 +3,27 @@ import axios from "axios";
 
 class Posts extends Component {
   state = {
-    posts: []
-  }
+    posts: [],
+  };
 
-  componentDidMount() {
-    const promise = axios.get("https://jsonplaceholder.typicode.com/posts");
+  async componentDidMount() {
+    try {
+      const { data: posts } = await axios.get(
+        "https://jsonplaceholder.typicode.com/posts"
+      );
+      this.setState({ posts });
+    } catch (error) {
+      console.log(error);
+    }
 
-    promise
-      .then(response => {
-        // console.log(response);
-        this.setState({ posts: response.data });
-      })
-      .catch(error => {
-        console.log(error);
-      })
+    // promise
+    //   .then(response => {
+    //     // console.log(response);
+    //     this.setState({ posts: response.data });
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   })
   }
 
   render() {
@@ -31,8 +38,7 @@ class Posts extends Component {
           </tr>
         </thead>
         <tbody>
-        {
-          this.state.posts.map(post => {
+          {this.state.posts.map((post) => {
             return (
               <tr>
                 <th scope="row">{post.id}</th>
@@ -45,8 +51,7 @@ class Posts extends Component {
                 </td>
               </tr>
             );
-          })
-        }
+          })}
         </tbody>
       </table>
     );
@@ -54,5 +59,3 @@ class Posts extends Component {
 }
 
 export default Posts;
-
-
