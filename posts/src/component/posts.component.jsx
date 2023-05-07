@@ -7,6 +7,22 @@ class Posts extends Component {
     posts: [],
   };
 
+//  axios.interceptors.request.use(null, error => {
+//   const expectedError = error.response && error.response.status >= 400 && error.response.status < 500
+//   if (!expectedError) {
+//     console.log("Logging error", error);
+//     alert('An unexpected error occured please try again');
+//   }
+//   else if (error.response.status === 400) {
+//     alert('bad request');
+//   }
+//   else if (error.response.status === 404) {
+//     alert('this post is not found or previously deleted');
+//   }
+
+//   return Promise.reject(error);
+//  })
+
   async componentDidMount() {
     try {
       const { data: posts } = await axios.get(apiUrl);
@@ -52,10 +68,8 @@ class Posts extends Component {
       await axios.delete(`${apiUrl}/${postId}`);
 
       const posts = [...this.state.posts];
-      posts.filter((post) => {
-        if (post.id !== postId) return true;
-      });
-      this.setState({ posts });
+      const updatedPost = posts.filter((post) => (post.id !== postId));
+      this.setState({ posts: updatedPost });
     } catch (error) {
       console.log(error);
     }
@@ -94,7 +108,7 @@ class Posts extends Component {
                     <td>
                       <button
                         className="btn btn-danger"
-                        onClick={() => this > handleDelete(post.id)}
+                        onClick={() => this.handleDelete(post.id)}
                       >
                         Delete
                       </button>
