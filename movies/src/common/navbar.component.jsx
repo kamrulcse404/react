@@ -81,7 +81,7 @@ class Navbar extends Form{
                 <ul class="list-group list-group-flush">
                   {searched_movies.map((movie, idx) => (
                     <li key={idx} className="list-group-item">
-                      <Link to={'/movie/' + movie.id}>{movie.title}</Link>
+                      <Link to={"/movie/" + movie.id}>{movie.title}</Link>
                     </li>
                   ))}
                 </ul>
@@ -93,12 +93,25 @@ class Navbar extends Form{
           </div>
           <ul class="navbar-nav">
             <li class="nav-item d-flex">
-              <Link class="nav-link active" aria-current="page" to="/login">
-                Login
-              </Link>
-              <Link class="nav-link active" aria-current="page" to="/sign-up">
-                Sign Up
-              </Link>
+              {!localStorage.getItem("accessToken") && (
+                <>
+                  <Link class="nav-link active" aria-current="page" to="/login">
+                    Login
+                  </Link>
+                  <Link
+                    class="nav-link active"
+                    aria-current="page"
+                    to="/sign-up"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
+              {localStorage.getItem("accessToken") && (
+                <Link class="nav-link active" aria-current="page" to="/logout">
+                  Logout
+                </Link>
+              )}
             </li>
           </ul>
         </div>

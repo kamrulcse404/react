@@ -12,8 +12,11 @@ class Login extends Form {
   doSubmit = async () => {
     const user = { username: this.state.data.username, password: this.state.data.password }
     try {
-      await login(user);
+      const res = await login(user);
       console.log('Login success');
+      console.log(res);
+      localStorage.setItem('accessToken', res.data.token)
+      window.location = '/movies';
       // go to home or movie route 
     } catch (error) {
       alert(error);
