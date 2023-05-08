@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Input from "../common/input.component";
-import { useNavigate } from "react-router-dom";
 import Form from "../common/form.component";
+import { login } from "../services/http-service";
 
 class Login extends Form {
   state = {
@@ -9,20 +9,34 @@ class Login extends Form {
     errors: { username: "", password: "" },
   };
 
-  doSubmit = (e) => {
-    const userName = e.target[0].value;
-    const password = e.target[1].value;
-    const history = useNavigate();
-
-    if (userName === "admin" && password === "12345") {
-      history("/movies");
-    } else {
+  doSubmit = async () => {
+    const user = { username: this.state.data.username, password: this.state.data.password }
+    try {
+      await login(user);
+      console.log('Login success');
+      // go to home or movie route 
+    } catch (error) {
+      alert(error);
       const errors = { ...this.state.errors };
-      errors.username = "Username may be incorrect";
-      errors.password = "Password may be incorrect";
+        errors.username = "Username may be incorrect";
+        errors.password = "Password may be incorrect";
 
-      this.setState({ ...this.state, errors });
+        this.setState({ ...this.state, errors });
     }
+
+    // const userName = e.target[0].value;
+    // const password = e.target[1].value;
+    // const history = useNavigate();
+
+    // if (userName === "admin" && password === "12345") {
+    //   history("/movies");
+    // } else {
+    //   const errors = { ...this.state.errors };
+    //   errors.username = "Username may be incorrect";
+    //   errors.password = "Password may be incorrect";
+
+    //   this.setState({ ...this.state, errors });
+    // }
   };
 
   // validateInput = (name, value) => {
@@ -55,7 +69,7 @@ class Login extends Form {
   render() {
     return (
       <div className="container w-50 mx-auto">
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={(e) => this.handleSubmit(e)}>
           <div className="mb-3">
             <Input
               label="User Name"

@@ -13,7 +13,9 @@ class SignUp extends Form {
   doSubmit = async () => {
     try {
       await register(this.state.data);
-      // go to login url
+      console.log('Register success');
+      // go to login page 
+      // this.props.history.push('/movies');
     } catch (error) {
       alert(error);
     }
