@@ -1,12 +1,24 @@
 import React from "react";
 import Input from "../common/input.component";
 import Form from "../common/form.component";
+import { register } from "../services/http-service";
+// import { useNavigate } from "react-router-dom";
 
 class SignUp extends Form {
   state = {
-    data: { username: "", firstname: "", lastname: '', password: '' },
-    errors: { username: "", password: "" },
+    data: { username: "", firstName: "", lastName: "", password: "" },
+    errors: { username: "", firstName: "", lastName: "", password: "" },
   };
+
+  doSubmit = async () => {
+    try {
+      await register(this.state.data);
+      // go to login url
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   render() {
     return (
       <div className="container w-50 mx-auto">
@@ -25,10 +37,10 @@ class SignUp extends Form {
           <div className="mb-3">
             <Input
               label="First Name"
-              name="firstname"
+              name="firstName"
               id="firstname"
               type="text"
-              value={this.state.data.firstname}
+              value={this.state.data.firstName}
               onChange={(e) => this.handleChange(e)}
               errors={this.state.errors}
             />
@@ -36,10 +48,10 @@ class SignUp extends Form {
           <div className="mb-3">
             <Input
               label="Last Name"
-              name="lastname"
+              name="lastName"
               id="lastname"
               type="text"
-              value={this.state.data.lastname}
+              value={this.state.data.lastName}
               onChange={(e) => this.handleChange(e)}
               errors={this.state.errors}
             />
@@ -55,14 +67,8 @@ class SignUp extends Form {
               errors={this.state.errors}
             />
           </div>
-          <div className="mb-3 form-check">
-            <input type="checkbox" className="form-check-input" id="remember" />
-            <label className="form-check-label" htmlFor="remember">
-              Check me out
-            </label>
-          </div>
           <button type="submit" className="btn btn-primary">
-            Login
+            Sign-Up
           </button>
         </form>
       </div>
