@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Form from "./form.component";
 import { getMovies } from "../services/movies.service";
+import { getCurrentUser } from "../services/http-service";
 
 class Navbar extends Form{
 
@@ -93,7 +94,7 @@ class Navbar extends Form{
           </div>
           <ul class="navbar-nav">
             <li class="nav-item d-flex">
-              {!localStorage.getItem("accessToken") && (
+              {!getCurrentUser() && (
                 <>
                   <Link class="nav-link active" aria-current="page" to="/login">
                     Login
@@ -107,7 +108,7 @@ class Navbar extends Form{
                   </Link>
                 </>
               )}
-              {localStorage.getItem("accessToken") && (
+              {getCurrentUser() && (
                 <Link class="nav-link active" aria-current="page" to="/logout">
                   Logout
                 </Link>
