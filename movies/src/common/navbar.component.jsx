@@ -56,13 +56,15 @@ class Navbar extends Form{
                 </Link>
               </li>
               <li class="nav-item">
-                <Link
-                  class="nav-link active"
-                  aria-current="page"
-                  to="/add-movie"
-                >
-                  Add Movie
-                </Link>
+                {getCurrentUser() && (
+                  <Link
+                    class="nav-link active"
+                    aria-current="page"
+                    to="/add-movie"
+                  >
+                    Add Movie
+                  </Link>
+                )}
               </li>
             </ul>
             <form class="d-flex" onSubmit={this.handleSubmit}>

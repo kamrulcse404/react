@@ -7,6 +7,7 @@ import SignUp from './signup.components';
 import MovieForm from './movie-form.component';
 import MovieInfo from './movie-info.components';
 import Logout from './logout.component';
+import { getCurrentUser } from '../services/http-service';
 
 class App extends Component {
     render() { 
@@ -19,7 +20,11 @@ class App extends Component {
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/movies" element={<MovieLists />} />
-              <Route path="/add-movie" element={<MovieForm />} />
+              {
+                getCurrentUser() && (
+                  <Route path="/add-movie" element={<MovieForm />} />
+                )
+              }
               <Route path="/" element={<MovieLists />} />
             </Routes>
           </>
